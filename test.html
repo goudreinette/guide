@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <title>Guide Test</title>
+
+    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    <script type="text/javascript" src="guide.js">
+
+    </script>
+  </head>
+  <body>
+    <h1 class='groepen'>Groepen</h1>
+    <h1 class='individueel'>Individueel</h1>
+    <div class="uber-grid-wrapper" data-slug="groepen"></div>
+    <div class="uber-grid-wrapper" data-slug="groepen-schepen"></div>
+    <div class="uber-grid-wrapper" data-slug="groepen-schepen-feeste"></div>
+    <div class="uber-grid-wrapper" data-slug="individueel"></div>
+    <div class="uber-grid-wrapper" data-slug="schoolklas"></div>
+  </body>
+
+
+<style media="screen">
+
+  .uber-grid-wrapper:first-child {
+    margin-top: 300px;
+  }
+
+  .uber-grid-wrapper {
+    width: 80%;
+    height: 300px;
+    margin: auto;
+    opacity: 1;
+    max-width: 800px;
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: all 0.5s;
+  }
+
+  .uber-grid-wrapper:nth-child(odd) {
+    background-color: lightgrey;
+  }
+
+  .uber-grid-wrapper.hidden {
+    opacity: 0;
+    height: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+  }
+</style>
