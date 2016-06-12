@@ -1,84 +1,56 @@
 /* global $ */
-
-class Model
+class ViewModel
 {
   constructor ()
   {
-    this.hidden = true
-    this.listeners = []
-  }
-
-  setState (key, value)
-  {
-    this[key] = value
-    this.notify()
-  }
-
-  attach (listener)
-  {
-    this.listeners.push(listener)
-  }
-
-  notify ()
-  {
-    for (const listener of this.listeners)
-      listener()
-  }
-}
-
-class ViewModel
-{
-  constructor (model)
-  {
-    this.model = model
-    this.model.attach(this.update.bind(this))
-
+    // DOM reference to mount point
+    this.$root    = document.querySelector('#contact-slideout .container')
     this.appendHTML()
 
-    // DOM references
-    this.$root    = document.querySelector('#guide')
-    this.$toggle  = document.querySelector('#guide-toggle')
-    this.$choices = document.querySelectorAll('#guide h1.choice')
-    this.$grids   = document.querySelectorAll('.uber-grid-wrapper')
-    this.$intro   = document.querySelector('#guide #intro')
+    // Get references to just created DOM elements
+    this.$toggle  = document.querySelector('.contact-menu-link i')
+    this.$back    = document.querySelector('#contact-slideout #back')
+    this.$choices = document.querySelectorAll('#contact-slideout h1.choice')
 
-    if (this.$grids.length) this.moveGrids()
+    this.$rows   = document.querySelectorAll('#contact-slideout .container > section.row')
+    this.$intro   = document.querySelector('#contact-slideout #intro')
 
     // Event listeners
     window.addEventListener('hashchange', this.onHashChange.bind(this))
     this.$toggle.addEventListener('click', this.onToggleClick.bind(this))
-    for (const choice of this.$choices)
-      choice.addEventListener('click', this.onChoiceClick.bind(this))
+    this.$back.addEventListener('click', this.onBackClick.bind(this))
+    for (let i = 0; i < this.$choices.length; i++)
+      this.$choices[i].addEventListener('click', this.onChoiceClick.bind(this))
+
+    // Update for the first time - for when hash !== ''
+    this.update()
   }
 
   appendHTML ()
   {
-    const html = `<div id="guide-toggle"></div>
-    <div id="guide">
+    const html = `
       <h1 id="intro">Maak uw keuze</h1>
       <div id="heading-container">
-        <h1 class="choice" id="groepen">Groepen</h1>
-        <h1 class="choice" id="individueel">Individueel</h1>
-      </div>
-
-    </div>`
-    document.body.insertAdjacentHTML('afterbegin', html)
-  }
-
-  moveGrids ()
-  {
-    this.$grids.forEach((grid) => this.$root.appendChild(grid))
+        <button id="back"></button>
+        <h1 class="choice" data-hash="groepen">Groepen</h1>
+        <h1 class="choice" data-hash="individueel">Individueel</h1>
+      </div>`
+    this.$root.insertAdjacentHTML('afterbegin', html)
   }
 
   onToggleClick ()
   {
-    this.model.setState('hidden', !this.model.hidden)
     location.hash = ''
   }
 
   onChoiceClick (event)
   {
-    location.hash = event.target.getAttribute('id')
+    location.hash = event.target.getAttribute('data-hash')
+  }
+
+  onBackClick ()
+  {
+    history.back()
   }
 
   onHashChange ()
@@ -89,32 +61,33 @@ class ViewModel
   update ()
   {
     // Show/hide grids based on their slug's occurence in location.hash
-    for (const grid of this.$grids)
+    for (let i = 0; i < this.$rows.length; i++)
     {
-      const slug   = grid.getAttribute('data-slug')
-      const hidden = !location.hash.includes(slug)
+      const id     = this.$rows[i].getAttribute('id')
+      const hidden = !location.hash.includes(id)
       if (hidden)
-        $(this.$grid).velocity({opacity: 0, scaleY: 0})
+        $(this.$rows[i]).velocity({scaleY: 0, opacity: 0})
       else
-        $(this.$grid).velocity({opacity: 1, scaleY: 1})
+        $(this.$rows[i]).velocity({scaleY: 1, opacity: 1})
     }
-
     // Show/hide the #intro based on the content of location.hash
     if (location.hash !== '')
+    {
       $(this.$intro).velocity({opacity: 0, height: 0, marginTop: 0})
+      $(this.$back).velocity({opacity: 1, height: 'auto'})
+    }
     else
-      $(this.$intro).velocity({opacity: 1, height: 'auto', marginTop: 300})
-
-    // Show/hide the #guide based on model.hidden
-    if (this.model.hidden)
-      $(this.$root).velocity({scale: 0.5, opacity: 0})
-    else
-      $(this.$root).velocity({scale: 1, opacity: 1})
+    {
+      $(this.$back).velocity({opacity: 0, height: 0})
+      $(this.$intro).velocity({opacity: 1, height: 'auto', marginTop: 100})
+    }
 
     // Set first choice active based on location.hash
-    for (const choice of this.$choices)
-      choice.classList.toggle('active', location.hash.includes(choice.getAttribute('id')))
+    for (let i = 0; i < this.$choices.length; i++)
+      this.$choices[i].classList.toggle('active', location.hash.includes(this.$choices[i].getAttribute('data-hash')))
   }
 }
 
-window.onload = () => new ViewModel(new Model())
+if (!window.$) window.$ = window.jQuery
+
+window.onload = () => new ViewModel()
