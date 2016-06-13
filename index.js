@@ -11,11 +11,13 @@ class ViewModel
     this.$toggle = document.querySelector('.contact-menu-link i')
     this.$back = document.querySelector('#contact-slideout #back')
     this.$choices = document.querySelectorAll('#contact-slideout h1.choice')
+    this.$icons = document.querySelector('#contact-slideout .choice-icon')
 
     this.$rows = document.querySelectorAll('#contact-slideout .guide')
     this.$intro = document.querySelector('#contact-slideout #intro')
 
     // Event listeners
+    window.toggleGuide = () => (this.$toggle).trigger('click')
     window.addEventListener('hashchange', this.onHashChange.bind(this))
     this.$toggle.addEventListener('click', this.onToggleClick.bind(this))
     this.$back.addEventListener('click', this.onBackClick.bind(this))
@@ -61,20 +63,17 @@ class ViewModel
       const hidden = location.hash.slice(1) !== slug
       if (hidden)
       {
-        $(this.$rows[i]).velocity({scaleY: 0, opacity: 0}, {complete: () =>
-        this.$rows[i].classList.add('hidden')})
-
+        $(this.$rows[i]).velocity({scaleY: 0, opacity: 0})
       }
       else
       {
-        $(this.$rows[i]).velocity({scaleY: 1, opacity: 1}, {complete: () =>
-        this.$rows[i].classList.remove('hidden')})
+        $(this.$rows[i]).velocity({scaleY: 1, opacity: 1})
       }
     }
     // Show/hide the #intro based on the content of location.hash
     if (location.hash !== '')
     {
-      $(this.$intro).velocity({opacity: 0, height: 0, marginTop: 0})
+      $(this.$intro).velocity({opacity: 0, height: 0, marginTop: -230})
       $(this.$back).velocity({opacity: 1, height: 'auto'})
     }
     else
@@ -89,6 +88,10 @@ class ViewModel
 
     // Change the background color when location.hash includes individueel
     this.$root.parentNode.classList.toggle('alternate-color', location.hash.includes('individueel'))
+
+    // Hide icons when location.hash !== ''
+    for (var i = 0; i < $this.$icons.length; i++)
+      $this.$icons[i].classList.toggle('hidden', location.hash !== '')
   }
 }
 

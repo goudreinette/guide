@@ -16,7 +16,7 @@
 #heading-container {
   margin: auto;
   width: 100%;
-  height: 200px;
+  height: 330px;
   justify-content: center;
   align-items: flex-end;
   display: flex;
@@ -41,8 +41,19 @@ h1#intro span.smaller {
   line-height: 1em!important;
 }
 
-#heading-container p {
-  text-align: center;
+#heading-container p, #heading-container h1 {
+  display: inline-block;
+}
+
+#heading-container > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#heading-container .choice-icon {
+  max-width: 200px;
 }
 
 #contact-slideout h1.choice {
