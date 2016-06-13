@@ -20,14 +20,14 @@ var ViewModel = function () {
     this.$toggle = document.querySelector('.contact-menu-link i');
     this.$back = document.querySelector('#contact-slideout #back');
     this.$choices = document.querySelectorAll('#contact-slideout h1.choice');
-    this.$icons = document.querySelector('#contact-slideout .choice-icon');
+    this.$icons = document.querySelectorAll('#contact-slideout .choice-icon');
 
     this.$rows = document.querySelectorAll('#contact-slideout .guide');
     this.$intro = document.querySelector('#contact-slideout #intro');
 
     // Event listeners
     window.toggleGuide = function () {
-      return _this.$toggle.trigger('click');
+      return $(_this.$toggle).trigger('click');
     };
     window.addEventListener('hashchange', this.onHashChange.bind(this));
     this.$toggle.addEventListener('click', this.onToggleClick.bind(this));
@@ -72,9 +72,9 @@ var ViewModel = function () {
         var slug = this.$rows[_i].getAttribute('data-slug');
         var hidden = location.hash.slice(1) !== slug;
         if (hidden) {
-          $(this.$rows[_i]).velocity({ scaleY: 0, opacity: 0 });
+          $(this.$rows[_i]).velocity({ opacity: 0, height: 0, scaleY: 0 });
         } else {
-          $(this.$rows[_i]).velocity({ scaleY: 1, opacity: 1 });
+          $(this.$rows[_i]).velocity({ opacity: 1, height: 'auto', scaleY: 1 });
         }
       }
       // Show/hide the #intro based on the content of location.hash
@@ -93,8 +93,8 @@ var ViewModel = function () {
       this.$root.parentNode.classList.toggle('alternate-color', location.hash.includes('individueel'));
 
       // Hide icons when location.hash !== ''
-      for (var i = 0; i < $this.$icons.length; i++) {
-        $this.$icons[i].classList.toggle('hidden', location.hash !== '');
+      for (var i = 0; i < this.$icons.length; i++) {
+        this.$icons[i].classList.toggle('hidden', location.hash !== '');
       }
     }
   }]);
