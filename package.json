@@ -1,0 +1,21 @@
+{
+  "name": "guide",
+  "version": "1.0.0",
+  "description": "<!-- <div class=\"uber-grid-wrapper\" data-slug=\"guide-groepen\"></div> <div class=\"uber-grid-wrapper\" data-slug=\"guide-groepen-schepen\"></div> <div class=\"uber-grid-wrapper\" data-slug=\"groepen-schepen-feeste\"></div> <div class=\"uber-grid-wrapper\" data-slug=\"individueel\"></div> <div class=\"uber-grid-wrapper\" data-slug=\"schoolklas\"></div> -->",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.newdeveloper.nl/rwoerd2033/guide.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babelify": "^7.3.0"
+  }
+}

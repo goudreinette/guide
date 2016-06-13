@@ -22,9 +22,9 @@ class Guide
   function guide_load ()
   {
     wp_enqueue_style('guide.css', plugin_dir_url( __FILE__ ) . 'guide.css');
-    wp_enqueue_script('jquery.js', plugin_dir_url( __FILE__ ) . 'jquery.js');
+    // wp_enqueue_script('jquery.js', plugin_dir_url( __FILE__ ) . 'jquery.js');
     wp_enqueue_script('velocity.min.js', plugin_dir_url( __FILE__ ) . 'velocity.min.js');
-    wp_enqueue_script('guide.js', plugin_dir_url( __FILE__ ) . 'guide.js');
+    wp_enqueue_script('guide.js', plugin_dir_url( __FILE__ ) . 'bundle.js');
   }
 }
 
