@@ -21,7 +21,7 @@ class Guide
     function guide_load()
     {
         wp_enqueue_style('guide.css', plugin_dir_url(__FILE__) . 'guide.css');
-        wp_enqueue_script('guide.js', plugin_dir_url(__FILE__) . 'index.js');
+        wp_enqueue_script('guide.js', plugin_dir_url(__FILE__) . 'guide.js');
     }
 }
 
