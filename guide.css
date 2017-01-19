@@ -3,9 +3,11 @@
 /* @override http://test.hansvanderwoerd.eu/wp-content/plugins/guide/guide.css?ver=4.5.2 */
 #contact-slideout {
     transition: opacity 1s, background-color 1s, transform 1s;
-    height: 100vh !important;
     display: block !important;
     opacity: 0;
+    position: fixed;
+    width: 100%;
+    height: 100vh !important;
     transform: scale(0.6);
     background: rgba(95, 211, 202, 0.97) !important;
 }
