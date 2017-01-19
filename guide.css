@@ -139,7 +139,7 @@ h1#intro span.smaller {
     top: 200px;
 }
 
-#contact-slideout #back.show {
+#contact-slideout #bdack.show {
     opacity: 1;
 }
 
@@ -168,10 +168,36 @@ h1#intro span.smaller {
 /**
  * Trigger
  */
-.contact-menu-link:not(.animated) {
-    opacity: 0;
+/*.contact-menu-link:not(.animated) {*/
+/*opacity: 0;*/
+/*}*/
+
+@keyframes rotateIn {
+    from {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: rotate3d(0, 0, 1, -200deg);
+        transform: rotate3d(0, 0, 1, -200deg);
+        /*opacity: 0;*/
+    }
+
+    to {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: none;
+        transform: none;
+        /*opacity: 1;*/
+    }
 }
 
 .contact-menu-link {
-    animation-delay: 3s;
+    animation-delay: 1.5s;
+    animation-name: rotateIn;
+    animation-direction: alternate;
+    animation-iteration-count: 3;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: backwards;
+    animation-fill-mode: backwards;
+    animation-timing-function: ease-out;
 }

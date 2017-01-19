@@ -26,7 +26,7 @@ class Guide {
 
         // Update for the first time - for when hash !== ''
         this.update()
-        this.spinCompass()
+        // this.spinCompass()
     }
 
     spinCompass() {
