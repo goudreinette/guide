@@ -6,10 +6,11 @@ class Guide {
         this.appendHTML()
 
         // Get references to just created DOM elements
-        this.$toggle = document.querySelector('.contact-menu-link i')
+        this.$toggle = document.querySelector('.contact-menu-link')
         this.$back = document.querySelector('#contact-slideout #back')
         this.$choices = document.querySelectorAll('#contact-slideout h1.choice')
-        this.$icons = document.querySelectorAll('#contact-slideout .choice-icon')
+        this.$icons = $('#contact-slideout .choice-icon')
+        this.$headingContainer = $('#contact-slideout #heading-container')
 
         this.$rows = document.querySelectorAll('#contact-slideout .guide')
         this.$intro = document.querySelector('#contact-slideout #intro')
@@ -23,18 +24,16 @@ class Guide {
             this.$choices[i].addEventListener('click', this.onChoiceClick.bind(this))
 
         // Update for the first time - for when hash !== ''
-        this.show = false
         this.update()
     }
 
     appendHTML() {
         const html = '<button id="back">Terug</button>'
-        this.$root.insertAdjacentHTML('afterbegin', html)
+        $('#contact-slideout #heading-container').prepend(html)
     }
 
     onToggleClick() {
         location.hash = ''
-        this.show = !this.show
         this.update()
     }
 
@@ -54,23 +53,16 @@ class Guide {
         // Show/hide grids based on their slug's occurence in location.hash
         for (let i = 0; i < this.$rows.length; i++) {
             const slug = this.$rows[i].getAttribute('data-slug')
-            const hidden = location.hash.slice(1) !== slug
-            if (hidden) {
-                $(this.$rows[i]).velocity({opacity: 0, height: 0, scaleY: 0})
-            }
-            else {
-                $(this.$rows[i]).velocity({opacity: 1, height: 'auto', scaleY: 1})
-            }
+            const show = location.hash.slice(1) === slug
+            $(this.$rows[i]).toggleClass('show', show)
         }
+
         // Show/hide the #intro based on the content of location.hash
-        if (location.hash !== '') {
-            $(this.$intro).velocity({opacity: 0, height: 0, marginTop: -230})
-            $(this.$back).velocity({opacity: 1, height: 30})
-        }
-        else {
-            $(this.$back).velocity({opacity: 0, height: 0})
-            $(this.$intro).velocity({opacity: 1, height: 220, marginTop: 100})
-        }
+        const hashEmpty = location.hash === ''
+
+        $(this.$intro).toggleClass('show', hashEmpty)
+        $(this.$back).toggleClass('show', !hashEmpty)
+
 
         // Set first choice active based on location.hash
         for (let i = 0; i < this.$choices.length; i++)
@@ -82,12 +74,12 @@ class Guide {
         /**
          * Root visibility
          */
-        debugger
-        this.$root.parentNode.classList.toggle('show', this.show)
+        var show = $(this.$toggle).hasClass('slide-open')
+        this.$root.parentNode.classList.toggle('show', show)
 
         // Hide icons when location.hash !== ''
-        for (var i = 0; i < this.$icons.length; i++)
-            this.$icons[i].classList.toggle('hidden', location.hash !== '')
+        this.$icons.toggleClass('show', hashEmpty)
+        this.$headingContainer.toggleClass('top', !hashEmpty)
     }
 }
 
