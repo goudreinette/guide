@@ -5,6 +5,7 @@ class Guide {
         this.$root = document.querySelector('#contact-slideout .container')
         this.appendHTML()
 
+
         // Get references to just created DOM elements
         this.$toggle = document.querySelector('.contact-menu-link')
         this.$back = document.querySelector('#contact-slideout #back')
@@ -16,7 +17,7 @@ class Guide {
         this.$intro = document.querySelector('#contact-slideout #intro')
 
         // Event listeners
-        window.toggleGuide = () => $(this.$toggle).trigger('click')
+        window.toggleGuide = this.toggleGuide.bind(this)
         window.addEventListener('hashchange', this.onHashChange.bind(this))
         this.$toggle.addEventListener('click', this.onToggleClick.bind(this))
         this.$back.addEventListener('click', this.onBackClick.bind(this))
@@ -24,6 +25,16 @@ class Guide {
             this.$choices[i].addEventListener('click', this.onChoiceClick.bind(this))
 
         // Update for the first time - for when hash !== ''
+        this.update()
+        this.spinCompass()
+    }
+
+    spinCompass() {
+        $(this.$toggle).addClass('animated rotateIn');
+    }
+
+    toggleGuide() {
+        $(this.$toggle).toggleClass('slide-open')
         this.update()
     }
 

@@ -164,3 +164,14 @@ h1#intro span.smaller {
     min-height: 275px;
     z-index: 2;
 }
+
+/**
+ * Trigger
+ */
+.contact-menu-link:not(.animated) {
+    opacity: 0;
+}
+
+.contact-menu-link {
+    animation-delay: 3s;
+}
